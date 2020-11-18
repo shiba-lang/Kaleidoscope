@@ -163,7 +163,7 @@ func getASCIICharacter() -> ASCIICharacter {
 }
 
 /// Helper function
-private func characterMatches(
+private func _characterMatches(
   character: ASCIICharacter,
   predicate: (Int32) -> (Int32)
 ) -> Bool {
@@ -171,17 +171,17 @@ private func characterMatches(
 }
 
 func isSpaceCharacter(_ character: ASCIICharacter) -> Bool {
-  return characterMatches(character: character, predicate: isspace)
+  return _characterMatches(character: character, predicate: isspace)
 }
 
 func isAlphaCharacter(_ character: ASCIICharacter) -> Bool {
-  return characterMatches(character: character, predicate: isalpha)
+  return _characterMatches(character: character, predicate: isalpha)
 }
 
 func isAlphaNumericCharacter(_ character: ASCIICharacter) -> Bool {
-  return characterMatches(character: character, predicate: isalnum)
+  return _characterMatches(character: character, predicate: isalnum)
 }
 
 func isDigitCharacter(_ character: ASCIICharacter) -> Bool {
-  return characterMatches(character: character, predicate: isdigit)
+  return _characterMatches(character: character, predicate: isdigit)
 }
