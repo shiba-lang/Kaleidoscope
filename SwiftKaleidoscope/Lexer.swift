@@ -28,7 +28,7 @@ enum Token {
   case In
 }
 
-private let identifierPredicate: LexerPredicate = {
+private let _identifierPredicate: LexerPredicate = {
   $0 != .EOF && isAlphaNumericCharacter($0)
 }
 

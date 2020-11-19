@@ -174,7 +174,7 @@ func parseNumberExpression(_ number: Double) -> Expr {
 }
 
 /// BinaryExpr ::= ('+' PrimaryExpr) *
-/// It use Operator-precedence parser.
+/// Use Operator-precedence parser algorithm.
 /// More info:
 /// https://en.wikipedia.org/wiki/Operator-precedence_parser
 func parseBinaryExpression(
