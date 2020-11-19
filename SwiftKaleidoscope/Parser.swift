@@ -15,8 +15,7 @@ enum ParserError: Error {
 }
 
 // MARK: - Expr
-
-protocol Expr: CustomStringConvertible {}
+typealias Expr = CustomStringConvertible
 
 // MARK: - NumberExpr
 
@@ -126,18 +125,18 @@ struct Function: Expr {
   }
 }
 
-private var _currentToken = Token.EOF
+private var currentToken = Token.EOF
 
 func consumeToken() {
-  _currentToken = nextToken()
+  currentToken = nextToken()
 }
 
 func getCurrentToken() -> Token {
-  _currentToken
+  currentToken
 }
 
-private func _isCurrentTokenCharacter(_ character: ASCIICharacter) -> Bool {
-  switch _currentToken {
+private func isCurrentTokenCharacter(_ character: ASCIICharacter) -> Bool {
+  switch currentToken {
   case let .Character(tokenCharacter):
     return tokenCharacter == character
   case _:
@@ -153,7 +152,7 @@ let operatorPrecedence = [
 ]
 
 func currentTokenPrecedence() -> Int {
-  switch _currentToken {
+  switch currentToken {
   case let .Character(character):
     let precedence = operatorPrecedence[character]
     switch precedence {
@@ -188,7 +187,7 @@ func parseBinaryExpression(
       return lhs
     }
 
-    let binaryOperator = _currentToken
+    let binaryOperator = currentToken
     consumeToken()
 
     do {
@@ -219,7 +218,7 @@ func parseBinaryExpression(
 /// ::= ForExpr
 
 func parsePrimaryExpression() throws -> Expr {
-  switch _currentToken {
+  switch currentToken {
   case let .Number(number):
     return parseNumberExpression(number)
   case let .Identifier(identifier):
@@ -232,7 +231,7 @@ func parsePrimaryExpression() throws -> Expr {
     return try parseForExpression()
   case _:
     consumeToken()
-    throw ParserError.Error("Can't parse \(_currentToken)")
+    throw ParserError.Error("Can't parse \(currentToken)")
   }
 }
 
@@ -242,24 +241,24 @@ func parsePrimaryExpression() throws -> Expr {
 func parseIdentifierExpr(_ identifier: String) throws -> Expr {
   consumeToken()
 
-  if !_isCurrentTokenCharacter(.ParenthesesOpened) {
+  if !isCurrentTokenCharacter(.ParenthesesOpened) {
     return VariableExpr(name: identifier)
   }
 
   consumeToken() // eat '('
 
   var arguments = [Expr]()
-  if !_isCurrentTokenCharacter(.ParenthesesClosed) {
+  if !isCurrentTokenCharacter(.ParenthesesClosed) {
     do {
       while true {
         let argument = try parseExpression()
         arguments.append(argument)
 
-        if _isCurrentTokenCharacter(.ParenthesesClosed) {
+        if isCurrentTokenCharacter(.ParenthesesClosed) {
           break
         }
 
-        if !_isCurrentTokenCharacter(.Comma) {
+        if !isCurrentTokenCharacter(.Comma) {
           throw ParserError.Error("expected ',' or ')'")
         }
 
@@ -307,7 +306,7 @@ func parseIfExpression() throws -> Expr {
 
     let condition = try parseExpression()
 
-    guard case .Then = _currentToken else {
+    guard case .Then = currentToken else {
       throw ParserError.Error("expected 'then'")
     }
 
@@ -315,7 +314,7 @@ func parseIfExpression() throws -> Expr {
 
     let thenBranch = try parseExpression()
 
-    guard case .Else = _currentToken else {
+    guard case .Else = currentToken else {
       throw ParserError.Error("expected 'else'")
     }
 
@@ -341,13 +340,13 @@ func parseForExpression() throws -> Expr {
   do {
     consumeToken() // eat 'for'
 
-    guard case let .Identifier(variableName) = _currentToken else {
+    guard case let .Identifier(variableName) = currentToken else {
       throw ParserError.Error("expected Identifier after 'for'")
     }
 
     consumeToken() // eat identifier
 
-    guard case .Character(.EqualsSign) = _currentToken else {
+    guard case .Character(.EqualsSign) = currentToken else {
       throw ParserError.Error("expected '=' aftier 'for'")
     }
 
@@ -355,7 +354,7 @@ func parseForExpression() throws -> Expr {
 
     let start = try parseExpression()
 
-    guard case .Character(.Comma) = _currentToken else {
+    guard case .Character(.Comma) = currentToken else {
       throw ParserError.Error("expected ',' after start expression")
     }
 
@@ -364,7 +363,7 @@ func parseForExpression() throws -> Expr {
     let end = try parseExpression()
 
     // step value is not optional in our implementation
-    guard case .Character(.Comma) = _currentToken else {
+    guard case .Character(.Comma) = currentToken else {
       throw ParserError.Error("expected ',' after end expression")
     }
 
@@ -372,7 +371,7 @@ func parseForExpression() throws -> Expr {
 
     let step = try parseExpression()
 
-    guard case .In = _currentToken else {
+    guard case .In = currentToken else {
       throw ParserError.Error("expected 'in' after step expression")
     }
 
@@ -395,13 +394,13 @@ func parseForExpression() throws -> Expr {
 /// Prototype
 /// ::= IdentifierExpr '(' IdentifierExpr* ')'
 func parsePrototype() throws -> Prototype {
-  guard case let .Identifier(prototypeName) = _currentToken else {
+  guard case let .Identifier(prototypeName) = currentToken else {
     throw ParserError.Error("expected prototype name")
   }
 
   consumeToken() // eat identifier
 
-  if !_isCurrentTokenCharacter(.ParenthesesOpened) {
+  if !isCurrentTokenCharacter(.ParenthesesOpened) {
     throw ParserError.Error("expected '(' in prototype")
   }
 
@@ -410,7 +409,7 @@ func parsePrototype() throws -> Prototype {
   var argumentNames = [String]()
 
   while true {
-    if case let .Identifier(identifier) = _currentToken {
+    if case let .Identifier(identifier) = currentToken {
       argumentNames.append(identifier)
     } else {
       break
@@ -418,7 +417,7 @@ func parsePrototype() throws -> Prototype {
     consumeToken()
   }
 
-  if !_isCurrentTokenCharacter(.ParenthesesClosed) {
+  if !isCurrentTokenCharacter(.ParenthesesClosed) {
     throw ParserError.Error("expected ')' in prototype")
   }
 

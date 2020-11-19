@@ -28,46 +28,46 @@ enum Token {
   case In
 }
 
-private let _identifierPredicate: LexerPredicate = {
+private let identifierPredicate: LexerPredicate = {
   $0 != .EOF && isAlphaNumericCharacter($0)
 }
 
-private let _numberPredicate: LexerPredicate = {
+private let numberPredicate: LexerPredicate = {
   $0 != .EOF && isDigitCharacter($0)
 }
 
-private let _commentPredicate: LexerPredicate = {
+private let commentPredicate: LexerPredicate = {
   $0 != .EOF && $0 != .LineFeed && $0 != .CarriageReturn
 }
 
-private var _currentCharacter = ASCIICharacter.Space
+private var currentCharacter = ASCIICharacter.Space
 
 private func _consumeUntil(_ predicate: LexerPredicate) -> String {
   var string = ""
-  while predicate(_currentCharacter) {
+  while predicate(currentCharacter) {
     string += String(
-      UnicodeScalar(UInt32(_currentCharacter.rawValue))!
+      UnicodeScalar(UInt32(currentCharacter.rawValue))!
     )
   }
   return string
 }
 
 func nextToken() -> Token {
-  while isSpaceCharacter(_currentCharacter) {
-    _currentCharacter = getASCIICharacter()
+  while isSpaceCharacter(currentCharacter) {
+    currentCharacter = getASCIICharacter()
   }
 
   /// Attempt to create Identifier Token
   ///
   /// [A-Za-z][A-Za-z0-9]*
-  if isDigitCharacter(_currentCharacter) {
-    let integerPart = _consumeUntil(_numberPredicate)
+  if isDigitCharacter(currentCharacter) {
+    let integerPart = _consumeUntil(numberPredicate)
     var decimalPoint = ""
-    if _currentCharacter == .FullStop {
+    if currentCharacter == .FullStop {
       decimalPoint = "."
-      _currentCharacter = getASCIICharacter() // remove '.'
+      currentCharacter = getASCIICharacter() // remove '.'
     }
-    let fractionPart = _consumeUntil(_numberPredicate)
+    let fractionPart = _consumeUntil(numberPredicate)
     let numberString = integerPart + decimalPoint + fractionPart
     if let number = Double(numberString) {
       return .Number(number)
@@ -77,17 +77,17 @@ func nextToken() -> Token {
   }
 
   /// Consuming comments
-  if _currentCharacter == .NumberSign {
-    let comment = _consumeUntil(_commentPredicate)
+  if currentCharacter == .NumberSign {
+    let comment = _consumeUntil(commentPredicate)
     return .Comment(comment)
   }
 
   /// End of stream
-  if _currentCharacter == .EOF {
+  if currentCharacter == .EOF {
     return .EOF
   }
 
-  let character = _currentCharacter
-  _currentCharacter = getASCIICharacter()
+  let character = currentCharacter
+  currentCharacter = getASCIICharacter()
   return .Character(character)
 }

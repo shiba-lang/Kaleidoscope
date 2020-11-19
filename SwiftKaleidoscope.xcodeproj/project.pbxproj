@@ -11,6 +11,7 @@
 		64E6243425655CBD00E5E5F8 /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E6243325655CBD00E5E5F8 /* Lexer.swift */; };
 		64E6243725655D8200E5E5F8 /* ASCIICharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E6243625655D8200E5E5F8 /* ASCIICharacter.swift */; };
 		64E6243B256565A500E5E5F8 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E6243A256565A500E5E5F8 /* Parser.swift */; };
+		64E6243E25659A3900E5E5F8 /* Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E6243D25659A3900E5E5F8 /* Driver.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +32,7 @@
 		64E6243325655CBD00E5E5F8 /* Lexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
 		64E6243625655D8200E5E5F8 /* ASCIICharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCIICharacter.swift; sourceTree = "<group>"; };
 		64E6243A256565A500E5E5F8 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		64E6243D25659A3900E5E5F8 /* Driver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Driver.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				64E6242B25655BB200E5E5F8 /* main.swift */,
 				64E6243325655CBD00E5E5F8 /* Lexer.swift */,
 				64E6243A256565A500E5E5F8 /* Parser.swift */,
+				64E6243D25659A3900E5E5F8 /* Driver.swift */,
 				64E6243625655D8200E5E5F8 /* ASCIICharacter.swift */,
 			);
 			path = SwiftKaleidoscope;
@@ -128,6 +131,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64E6243E25659A3900E5E5F8 /* Driver.swift in Sources */,
 				64E6243B256565A500E5E5F8 /* Parser.swift in Sources */,
 				64E6243425655CBD00E5E5F8 /* Lexer.swift in Sources */,
 				64E6242C25655BB200E5E5F8 /* main.swift in Sources */,
@@ -259,8 +263,15 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5SB3H4Y5NS;
 				ENABLE_HARDENED_RUNTIME = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"/Users/khoalda/code/llvm-project/build/lib\n/Users/khoalda/code/llvm-project/build/lib\n",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
+				USER_HEADER_SEARCH_PATHS = (
+					"/Users/khoalda/code/llvm-project/build/include\n/Users/khoalda/code/llvm-project/build/include\n",
+					"/Users/khoalda/code/llvm-project/llvm/include\n/Users/khoalda/code/llvm-project/llvm/include\n",
+				);
 			};
 			name = Debug;
 		};
@@ -270,8 +281,16 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5SB3H4Y5NS;
 				ENABLE_HARDENED_RUNTIME = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"/Users/khoalda/code/llvm-project/build/lib\n/Users/khoalda/code/llvm-project/build/lib\n",
+				);
+				"LIBRARY_SEARCH_PATHS[arch=*]" = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
+				USER_HEADER_SEARCH_PATHS = (
+					"/Users/khoalda/code/llvm-project/build/include\n/Users/khoalda/code/llvm-project/build/include\n",
+					"/Users/khoalda/code/llvm-project/llvm/include\n/Users/khoalda/code/llvm-project/llvm/include\n",
+				);
 			};
 			name = Release;
 		};
