@@ -11,7 +11,7 @@ private typealias LexerPredicate = ((ASCIICharacter) -> Bool)
 
 // MARK: - Token
 
-enum Token {
+public enum Token {
   case EOF
   case Def
   case Extern
@@ -40,9 +40,9 @@ private let commentPredicate: LexerPredicate = {
   $0 != .EOF && $0 != .LineFeed && $0 != .CarriageReturn
 }
 
-private var currentCharacter = ASCIICharacter.Space
+private var currentCharacter: ASCIICharacter = .Space
 
-private func _consumeUntil(_ predicate: LexerPredicate) -> String {
+private func consumeUntil(_ predicate: LexerPredicate) -> String {
   var string = ""
   while predicate(currentCharacter) {
     string += String(
@@ -52,7 +52,7 @@ private func _consumeUntil(_ predicate: LexerPredicate) -> String {
   return string
 }
 
-func nextToken() -> Token {
+public func getToken() -> Token {
   while isSpaceCharacter(currentCharacter) {
     currentCharacter = getASCIICharacter()
   }
@@ -61,13 +61,13 @@ func nextToken() -> Token {
   ///
   /// [A-Za-z][A-Za-z0-9]*
   if isDigitCharacter(currentCharacter) {
-    let integerPart = _consumeUntil(numberPredicate)
+    let integerPart = consumeUntil(numberPredicate)
     var decimalPoint = ""
     if currentCharacter == .FullStop {
       decimalPoint = "."
-      currentCharacter = getASCIICharacter() // remove '.'
+      currentCharacter = getASCIICharacter() // eat '.'
     }
-    let fractionPart = _consumeUntil(numberPredicate)
+    let fractionPart = consumeUntil(numberPredicate)
     let numberString = integerPart + decimalPoint + fractionPart
     if let number = Double(numberString) {
       return .Number(number)
@@ -78,7 +78,7 @@ func nextToken() -> Token {
 
   /// Consuming comments
   if currentCharacter == .NumberSign {
-    let comment = _consumeUntil(commentPredicate)
+    let comment = consumeUntil(commentPredicate)
     return .Comment(comment)
   }
 

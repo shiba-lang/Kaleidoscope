@@ -11,10 +11,10 @@ import Foundation
 
 enum ParserError: Error {
   case Error(String)
-  case generalError
 }
 
 // MARK: - Expr
+
 typealias Expr = CustomStringConvertible
 
 // MARK: - NumberExpr
@@ -43,7 +43,7 @@ struct BinaryExpr: Expr {
   let rhs: Expr
 
   var description: String {
-    return "("
+    "("
       + binaryOperator.description
       + lhs.description
       + " "
@@ -76,11 +76,11 @@ struct IfExpr: Expr {
   let thenBranch: Expr
   let elseBranch: Expr
 
-  var description: String {
-    return "if " + condition.description + "\n"
-      + "then " + thenBranch.description + "\n"
-      + "else" + elseBranch.description
-  }
+	var description: String {
+		"if " + condition.description + "\n"
+			+ "then " + thenBranch.description + "\n"
+			+ "else" + elseBranch.description
+	}
 }
 
 // MARK: - ForExpr
@@ -93,7 +93,7 @@ struct ForExpr: Expr {
   let body: Expr
 
   var description: String {
-    return "for " + variable + " = "
+    "for " + variable + " = "
       + start.description + ", "
       + end.description + " "
       + step.description
@@ -127,8 +127,8 @@ struct Function: Expr {
 
 private var currentToken = Token.EOF
 
-func consumeToken() {
-  currentToken = nextToken()
+func getNextToken() {
+  currentToken = getToken()
 }
 
 func getCurrentToken() -> Token {
@@ -144,11 +144,13 @@ private func isCurrentTokenCharacter(_ character: ASCIICharacter) -> Bool {
   }
 }
 
-let operatorPrecedence = [
-  ASCIICharacter.LessThanSign: 10,
-  ASCIICharacter.PlusSign: 20,
-  ASCIICharacter.Minus: 20,
-  ASCIICharacter.Asterisk: 40,
+/// Install standard binary operators.
+/// 1 is lowest precedence.
+let operatorPrecedence: [ASCIICharacter: Int] = [
+  .LessThanSign: 10, // <
+  .PlusSign: 20, // +
+  .Minus: 20, // -
+  .Asterisk: 40, // *
 ]
 
 func currentTokenPrecedence() -> Int {
@@ -168,7 +170,7 @@ func currentTokenPrecedence() -> Int {
 
 /// NumberExpr ::= number
 func parseNumberExpression(_ number: Double) -> Expr {
-  consumeToken()
+  getNextToken()
   return NumberExpr(value: number)
 }
 
@@ -188,7 +190,7 @@ func parseBinaryExpression(
     }
 
     let binaryOperator = currentToken
-    consumeToken()
+    getNextToken()
 
     do {
       var rhs = try parsePrimaryExpression()
@@ -216,7 +218,6 @@ func parseBinaryExpression(
 /// ::= ParenExpr
 /// ::= IfExpr
 /// ::= ForExpr
-
 func parsePrimaryExpression() throws -> Expr {
   switch currentToken {
   case let .Number(number):
@@ -230,7 +231,7 @@ func parsePrimaryExpression() throws -> Expr {
   case .For:
     return try parseForExpression()
   case _:
-    consumeToken()
+    getNextToken()
     throw ParserError.Error("Can't parse \(currentToken)")
   }
 }
@@ -239,13 +240,13 @@ func parsePrimaryExpression() throws -> Expr {
 /// ::= identifier
 /// ::= identifier '(' Expression* ')'
 func parseIdentifierExpr(_ identifier: String) throws -> Expr {
-  consumeToken()
+  getNextToken()
 
   if !isCurrentTokenCharacter(.ParenthesesOpened) {
     return VariableExpr(name: identifier)
   }
 
-  consumeToken() // eat '('
+  getNextToken() // eat '('
 
   var arguments = [Expr]()
   if !isCurrentTokenCharacter(.ParenthesesClosed) {
@@ -262,7 +263,7 @@ func parseIdentifierExpr(_ identifier: String) throws -> Expr {
           throw ParserError.Error("expected ',' or ')'")
         }
 
-        consumeToken()
+        getNextToken()
       }
     } catch ParserError.Error(let error) {
       throw ParserError.Error(error)
@@ -270,7 +271,7 @@ func parseIdentifierExpr(_ identifier: String) throws -> Expr {
       throw ParserError.Error("Something went wrong!")
     }
   }
-  consumeToken() // eat ')'
+  getNextToken() // eat ')'
   return CallExpr(name: identifier, arguments: arguments)
 }
 
@@ -302,7 +303,7 @@ func parseParenExpression() throws -> Expr {
 
 func parseIfExpression() throws -> Expr {
   do {
-    consumeToken() // eat 'if'
+    getNextToken() // eat 'if'
 
     let condition = try parseExpression()
 
@@ -310,7 +311,7 @@ func parseIfExpression() throws -> Expr {
       throw ParserError.Error("expected 'then'")
     }
 
-    consumeToken() // eat 'then'
+    getNextToken() // eat 'then'
 
     let thenBranch = try parseExpression()
 
@@ -318,7 +319,7 @@ func parseIfExpression() throws -> Expr {
       throw ParserError.Error("expected 'else'")
     }
 
-    consumeToken() // eat 'else'
+    getNextToken() // eat 'else'
 
     let elseBranch = try parseExpression()
     return IfExpr(
@@ -338,19 +339,19 @@ func parseIfExpression() throws -> Expr {
 /// ::= for Identifier = Expr, Expr, Expr in Expr
 func parseForExpression() throws -> Expr {
   do {
-    consumeToken() // eat 'for'
+    getNextToken() // eat 'for'
 
     guard case let .Identifier(variableName) = currentToken else {
       throw ParserError.Error("expected Identifier after 'for'")
     }
 
-    consumeToken() // eat identifier
+    getNextToken() // eat identifier
 
     guard case .Character(.EqualsSign) = currentToken else {
       throw ParserError.Error("expected '=' aftier 'for'")
     }
 
-    consumeToken() // eat '='
+    getNextToken() // eat '='
 
     let start = try parseExpression()
 
@@ -358,7 +359,7 @@ func parseForExpression() throws -> Expr {
       throw ParserError.Error("expected ',' after start expression")
     }
 
-    consumeToken() // eat ','
+    getNextToken() // eat ','
 
     let end = try parseExpression()
 
@@ -367,7 +368,7 @@ func parseForExpression() throws -> Expr {
       throw ParserError.Error("expected ',' after end expression")
     }
 
-    consumeToken() // eat ','
+    getNextToken() // eat ','
 
     let step = try parseExpression()
 
@@ -375,7 +376,7 @@ func parseForExpression() throws -> Expr {
       throw ParserError.Error("expected 'in' after step expression")
     }
 
-    consumeToken() // eat 'in'
+    getNextToken() // eat 'in'
 
     let body = try parseExpression()
 
@@ -398,13 +399,13 @@ func parsePrototype() throws -> Prototype {
     throw ParserError.Error("expected prototype name")
   }
 
-  consumeToken() // eat identifier
+  getNextToken() // eat identifier
 
   if !isCurrentTokenCharacter(.ParenthesesOpened) {
     throw ParserError.Error("expected '(' in prototype")
   }
 
-  consumeToken() // eat '('
+  getNextToken() // eat '('
 
   var argumentNames = [String]()
 
@@ -414,14 +415,14 @@ func parsePrototype() throws -> Prototype {
     } else {
       break
     }
-    consumeToken()
+    getNextToken()
   }
 
   if !isCurrentTokenCharacter(.ParenthesesClosed) {
     throw ParserError.Error("expected ')' in prototype")
   }
 
-  consumeToken() // eat ')'
+  getNextToken() // eat ')'
 
   return Prototype(name: prototypeName, arguments: argumentNames)
 }
@@ -429,7 +430,7 @@ func parsePrototype() throws -> Prototype {
 /// FunctionDefinition
 /// ::= extern Prototype
 func parseExternFunction() throws -> Prototype {
-  consumeToken() // eat 'extern'
+  getNextToken() // eat 'extern'
   return try parsePrototype()
 }
 
@@ -437,7 +438,7 @@ func parseExternFunction() throws -> Prototype {
 /// ::= def Prototype Expression
 func parseFunctionDefinition() throws -> Function {
   do {
-    consumeToken() // eat 'def'
+    getNextToken() // eat 'def'
     let prototype = try parsePrototype()
     let body = try parseExpression()
     return Function(prototype: prototype, body: body)
