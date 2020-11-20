@@ -76,11 +76,11 @@ struct IfExpr: Expr {
   let thenBranch: Expr
   let elseBranch: Expr
 
-	var description: String {
-		"if " + condition.description + "\n"
-			+ "then " + thenBranch.description + "\n"
-			+ "else" + elseBranch.description
-	}
+  var description: String {
+    "if " + condition.description + "\n"
+      + "then " + thenBranch.description + "\n"
+      + "else" + elseBranch.description
+  }
 }
 
 // MARK: - ForExpr

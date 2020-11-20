@@ -11,7 +11,7 @@ private typealias LexerPredicate = ((ASCIICharacter) -> Bool)
 
 // MARK: - Token
 
-public enum Token {
+enum Token {
   case EOF
   case Def
   case Extern
@@ -52,7 +52,7 @@ private func consumeUntil(_ predicate: LexerPredicate) -> String {
   return string
 }
 
-public func getToken() -> Token {
+func getToken() -> Token {
   while isSpaceCharacter(currentCharacter) {
     currentCharacter = getASCIICharacter()
   }

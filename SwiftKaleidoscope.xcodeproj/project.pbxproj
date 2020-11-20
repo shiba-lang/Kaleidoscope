@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		647BFCD02566DBF500AD2234 /* CodeGen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647BFCCF2566DBF500AD2234 /* CodeGen.swift */; };
 		64E6242C25655BB200E5E5F8 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E6242B25655BB200E5E5F8 /* main.swift */; };
 		64E6243425655CBD00E5E5F8 /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E6243325655CBD00E5E5F8 /* Lexer.swift */; };
 		64E6243725655D8200E5E5F8 /* ASCIICharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E6243625655D8200E5E5F8 /* ASCIICharacter.swift */; };
@@ -27,6 +28,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		647BFCCF2566DBF500AD2234 /* CodeGen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeGen.swift; sourceTree = "<group>"; };
 		64E6242825655BB200E5E5F8 /* SwiftKaleidoscope */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SwiftKaleidoscope; sourceTree = BUILT_PRODUCTS_DIR; };
 		64E6242B25655BB200E5E5F8 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		64E6243325655CBD00E5E5F8 /* Lexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 			isa = PBXGroup;
 			children = (
 				64E6242B25655BB200E5E5F8 /* main.swift */,
+				647BFCCF2566DBF500AD2234 /* CodeGen.swift */,
 				64E6243325655CBD00E5E5F8 /* Lexer.swift */,
 				64E6243A256565A500E5E5F8 /* Parser.swift */,
 				64E6243D25659A3900E5E5F8 /* Driver.swift */,
@@ -132,6 +135,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				64E6243E25659A3900E5E5F8 /* Driver.swift in Sources */,
+				647BFCD02566DBF500AD2234 /* CodeGen.swift in Sources */,
 				64E6243B256565A500E5E5F8 /* Parser.swift in Sources */,
 				64E6243425655CBD00E5E5F8 /* Lexer.swift in Sources */,
 				64E6242C25655BB200E5E5F8 /* main.swift in Sources */,
@@ -193,7 +197,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				LLVM_BUILD_DIR = "/Users/khoalda/code/llvm-project/build";
+				LLVM_LIBS = "-lLLVMX86Disassembler -lLLVMX86AsmParser -lLLVMX86CodeGen -lLLVMCFGuard -lLLVMGlobalISel -lLLVMSelectionDAG -lLLVMAsmPrinter -lLLVMDebugInfoDWARF -lLLVMCodeGen -lLLVMScalarOpts -lLLVMInstCombine -lLLVMAggressiveInstCombine -lLLVMTransformUtils -lLLVMBitWriter -lLLVMX86Desc -lLLVMMCDisassembler -lLLVMX86Utils -lLLVMX86Info -lLLVMMCJIT -lLLVMExecutionEngine -lLLVMTarget -lLLVMAnalysis -lLLVMProfileData -lLLVMRuntimeDyld -lLLVMObject -lLLVMTextAPI -lLLVMMCParser -lLLVMBitReader -lLLVMMC -lLLVMDebugInfoCodeView -lLLVMDebugInfoMSF -lLLVMCore -lLLVMRemarks -lLLVMBitstreamReader -lLLVMBinaryFormat -lLLVMSupport -lLLVMDemangle\n";
+				LLVM_SOURCE_DIR = "/Users/khoalda/code/llvm-project/llvm";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -248,7 +255,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				LLVM_BUILD_DIR = "/Users/khoalda/code/llvm-project/build";
+				LLVM_LIBS = "-lLLVMX86Disassembler -lLLVMX86AsmParser -lLLVMX86CodeGen -lLLVMCFGuard -lLLVMGlobalISel -lLLVMSelectionDAG -lLLVMAsmPrinter -lLLVMDebugInfoDWARF -lLLVMCodeGen -lLLVMScalarOpts -lLLVMInstCombine -lLLVMAggressiveInstCombine -lLLVMTransformUtils -lLLVMBitWriter -lLLVMX86Desc -lLLVMMCDisassembler -lLLVMX86Utils -lLLVMX86Info -lLLVMMCJIT -lLLVMExecutionEngine -lLLVMTarget -lLLVMAnalysis -lLLVMProfileData -lLLVMRuntimeDyld -lLLVMObject -lLLVMTextAPI -lLLVMMCParser -lLLVMBitReader -lLLVMMC -lLLVMDebugInfoCodeView -lLLVMDebugInfoMSF -lLLVMCore -lLLVMRemarks -lLLVMBitstreamReader -lLLVMBinaryFormat -lLLVMSupport -lLLVMDemangle\n";
+				LLVM_SOURCE_DIR = "/Users/khoalda/code/llvm-project/llvm";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -260,17 +270,36 @@
 		64E6243025655BB200E5E5F8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5SB3H4Y5NS;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
-				LIBRARY_SEARCH_PATHS = (
-					"/Users/khoalda/code/llvm-project/build/lib\n/Users/khoalda/code/llvm-project/build/lib\n",
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					__STDC_LIMIT_MACROS,
+					__STDC_CONSTANT_MACROS,
+				);
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = "$(LLVM_BUILD_DIR)/lib";
+				LLVM_BUILD_DIR = "/Users/khoalda/code/llvm-project/build";
+				LLVM_LIBS = "-lLLVMX86Disassembler -lLLVMX86AsmParser -lLLVMX86CodeGen -lLLVMCFGuard -lLLVMGlobalISel -lLLVMSelectionDAG -lLLVMAsmPrinter -lLLVMDebugInfoDWARF -lLLVMCodeGen -lLLVMScalarOpts -lLLVMInstCombine -lLLVMAggressiveInstCombine -lLLVMTransformUtils -lLLVMBitWriter -lLLVMX86Desc -lLLVMMCDisassembler -lLLVMX86Info -lLLVMMCJIT -lLLVMExecutionEngine -lLLVMTarget -lLLVMAnalysis -lLLVMProfileData -lLLVMRuntimeDyld -lLLVMObject -lLLVMTextAPI -lLLVMMCParser -lLLVMBitReader -lLLVMMC -lLLVMDebugInfoCodeView -lLLVMDebugInfoMSF -lLLVMCore -lLLVMRemarks -lLLVMBitstreamReader -lLLVMBinaryFormat -lLLVMSupport -lLLVMDemangle\n";
+				LLVM_SOURCE_DIR = "/Users/khoalda/code/llvm-project/llvm";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_LDFLAGS = (
+					"$(LLVM_LIBS)",
+					"-lz",
+					"-ltermcap",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = (
-					"/Users/khoalda/code/llvm-project/build/include\n/Users/khoalda/code/llvm-project/build/include\n",
-					"/Users/khoalda/code/llvm-project/llvm/include\n/Users/khoalda/code/llvm-project/llvm/include\n",
+					"$(LLVM_BUILD_DIR)/include",
+					"$(LLVM_SOURCE_DIR)/include",
 				);
 			};
 			name = Debug;
@@ -278,18 +307,34 @@
 		64E6243125655BB200E5E5F8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5SB3H4Y5NS;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
-				LIBRARY_SEARCH_PATHS = (
-					"/Users/khoalda/code/llvm-project/build/lib\n/Users/khoalda/code/llvm-project/build/lib\n",
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					__STDC_LIMIT_MACROS,
+					__STDC_CONSTANT_MACROS,
 				);
-				"LIBRARY_SEARCH_PATHS[arch=*]" = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = "$(LLVM_BUILD_DIR)/lib";
+				LLVM_BUILD_DIR = "/Users/khoalda/code/llvm-project/build";
+				LLVM_LIBS = "-lLLVMX86Disassembler -lLLVMX86AsmParser -lLLVMX86CodeGen -lLLVMCFGuard -lLLVMGlobalISel -lLLVMSelectionDAG -lLLVMAsmPrinter -lLLVMDebugInfoDWARF -lLLVMCodeGen -lLLVMScalarOpts -lLLVMInstCombine -lLLVMAggressiveInstCombine -lLLVMTransformUtils -lLLVMBitWriter -lLLVMX86Desc -lLLVMMCDisassembler -lLLVMX86Info -lLLVMMCJIT -lLLVMExecutionEngine -lLLVMTarget -lLLVMAnalysis -lLLVMProfileData -lLLVMRuntimeDyld -lLLVMObject -lLLVMTextAPI -lLLVMMCParser -lLLVMBitReader -lLLVMMC -lLLVMDebugInfoCodeView -lLLVMDebugInfoMSF -lLLVMCore -lLLVMRemarks -lLLVMBitstreamReader -lLLVMBinaryFormat -lLLVMSupport -lLLVMDemangle\n";
+				LLVM_SOURCE_DIR = "/Users/khoalda/code/llvm-project/llvm";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_LDFLAGS = (
+					"$(LLVM_LIBS)",
+					"-lz",
+					"-ltermcap",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = (
-					"/Users/khoalda/code/llvm-project/build/include\n/Users/khoalda/code/llvm-project/build/include\n",
-					"/Users/khoalda/code/llvm-project/llvm/include\n/Users/khoalda/code/llvm-project/llvm/include\n",
+					"$(LLVM_BUILD_DIR)/include",
+					"$(LLVM_SOURCE_DIR)/include",
 				);
 			};
 			name = Release;
