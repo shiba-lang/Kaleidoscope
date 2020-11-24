@@ -33,8 +33,6 @@ do {
   }
   FileManager.default.createFile(atPath: ksPath.path, contents: nil)
   try codegen.module.print(to: ksPath.path)
-  print("Successfully wrote LLVM IR to \(ksPath.lastPathComponent)")
-
 
   let objPath = path.deletingPathExtension().appendingPathExtension("o")
   if FileManager.default.fileExists(atPath: objPath.path) {
